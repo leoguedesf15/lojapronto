@@ -1,0 +1,10 @@
+Manifest-Version: 1.0
+Implementation-Title: loja
+Implementation-Version: 1.0.0-SNAPSHOT
+Built-By: leonardo.guedes
+Implementation-Vendor-Id: br.com.gm5
+Build-Jdk: 1.8.0_211
+Implementation-URL: http://projects.spring.io/spring-boot/loja/
+Created-By: Maven Integration for Eclipse
+Implementation-Vendor: Pivotal Software, Inc.
+
