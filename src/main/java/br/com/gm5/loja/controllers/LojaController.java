@@ -1,7 +1,5 @@
 package br.com.gm5.loja.controllers;
 
-import java.util.List;
-
 import javax.servlet.http.HttpSession;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -14,6 +12,7 @@ import org.springframework.web.bind.annotation.RestController;
 import com.google.gson.Gson;
 
 import br.com.gm5.loja.models.Loja;
+import br.com.gm5.loja.repositories.LojaDAO;
 import br.com.gm5.loja.repositories.LojaRepository;
 
 @RestController
@@ -22,6 +21,8 @@ public class LojaController {
 	@Autowired
 	private UsuarioController ucontroller;
 
+	@Autowired
+	private LojaDAO lojaDAO;
 	@Autowired
 	private LojaRepository repository;
 
@@ -76,6 +77,29 @@ public class LojaController {
 			if (ucontroller.validaSessao(session)) {
 				Gson g = new Gson();
 				Iterable<Loja> lojas = repository.findAll();
+				lojas.forEach(loja->{
+					loja.getItens().forEach(prod->{
+						prod.setLojas(null);
+					});
+				});
+				
+				return g.toJson(lojas);
+			} else
+				throw new Exception("Usuário não foi logado");
+		} catch (Exception ex) {
+			 return ex.getMessage();
+			 
+		}
+	}
+	
+	
+	@PostMapping("/byName")
+	String findByName(@RequestParam(value="nome")String nome, HttpSession session) {
+		try {
+
+			if (ucontroller.validaSessao(session)) {
+				Gson g = new Gson();
+				Iterable<Loja> lojas = lojaDAO.findByName(nome);
 				lojas.forEach(loja->{
 					loja.getItens().forEach(prod->{
 						prod.setLojas(null);

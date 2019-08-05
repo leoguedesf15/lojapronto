@@ -12,8 +12,10 @@ import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.JoinTable;
 import javax.persistence.ManyToMany;
+import javax.persistence.Table;
 
-@Entity
+@Entity(name = "loja")
+@Table(name="loja")
 public class Loja implements Serializable{
 	
 	
